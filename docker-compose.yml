@@ -1,0 +1,37 @@
+services:
+  store_manager_app:
+    build: .
+    volumes:
+      - .:/app
+    depends_on:
+      - mysql
+      - mongo
+    stdin_open: true
+    tty: true  
+
+  mysql:
+    image: mysql:8
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    volumes:
+      - ./db-init:/docker-entrypoint-initdb.d
+
+  mongo:
+    image: mongo:6
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: user
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
