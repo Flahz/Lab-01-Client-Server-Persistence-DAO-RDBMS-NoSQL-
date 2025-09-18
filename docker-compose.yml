@@ -4,23 +4,20 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - mysql
       - mongo
+      - mongo_init
+      - mysql
     stdin_open: true
     tty: true  
 
-  mysql:
-    image: mysql:8
-    restart: unless-stopped
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mydb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: pass
+  mongo_init:
+    build: .
     volumes:
-      - ./db-init:/docker-entrypoint-initdb.d
+      - .:/app
+    depends_on:
+      - mongo
+    command: python /app/db-init/init_mongo.py
+    restart: "no"
 
   mongo:
     image: mongo:6
@@ -33,5 +30,20 @@ services:
     volumes:
       - mongo-data:/data/db
 
+  mysql:
+    image: mysql:8
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: store_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db-init/init.sql:/docker-entrypoint-initdb.d/init.sql
+
 volumes:
   mongo-data:
+  mysql-data:

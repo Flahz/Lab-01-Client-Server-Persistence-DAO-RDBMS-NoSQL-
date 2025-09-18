@@ -12,7 +12,9 @@ class UserView:
         """ Show menu with operation options which can be selected by the user """
         controller = UserController()
         while True:
-            print("\n1. Montrer la liste d'utilisateurs\n2. Ajouter un utilisateur\n3. Quitter l'appli")
+            print("\n1. Montrer la liste d'utilisateurs")
+            print("2. Ajouter un utilisateur")
+            print("3. Retour au menu principal")
             choice = input("Choisissez une option: ")
 
             if choice == '1':
@@ -22,6 +24,7 @@ class UserView:
                 name, email = UserView.get_inputs()
                 user = User(None, name, email)
                 controller.create_user(user)
+                print("Utilisateur ajouté avec succès!")
             elif choice == '3':
                 controller.shutdown()
                 break
@@ -31,7 +34,11 @@ class UserView:
     @staticmethod
     def show_users(users):
         """ List users """
-        print("\n".join(f"{user.id}: {user.name} ({user.email})" for user in users))
+        if not users:
+            print("Aucun utilisateur trouvé.")
+        else:
+            print("\n--- Liste des utilisateurs ---")
+            print("\n".join(f"{user.name} | Email: {user.email}" for user in users))
 
     @staticmethod
     def get_inputs():
