@@ -28,3 +28,17 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
 
+      - name: Déployer sur la VM LOG430
+        if: success()
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: 10.194.32.200
+          username: log430
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: |
+            cd /chemin/vers/ton/app
+            git pull
+            # Redémarre ton service si besoin, exemple :
+            # systemctl restart mon-app
+

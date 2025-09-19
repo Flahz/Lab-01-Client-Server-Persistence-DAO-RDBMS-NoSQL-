@@ -1,0 +1,1168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configure xmlns="http://schemas.xmlsoap.org/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.xmlsoap.org/encoding/ ConfigXMLSchema.xsd">
+	<fileGroup treeRootName="Cisco Secure Client" directoryName="Cisco Secure Client\AnyConnect VPN">
+		<title>AnyConnect VPN</title>
+        <file id="csc-ac-config">
+            <default>true</default>
+            <description>AnyConnect Configurations</description>
+            <gui>
+                <label>_tr("AnyConnect Configurations")</label>
+                <file_type>log</file_type>
+            </gui>
+            <dart>
+                <required>false</required>
+                <os opsys="win">
+                    <file_copy_action>
+                        <action>
+                            <loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\VPN\*ProxySettings.keep</loc>
+                            <clear_log apply="false"/>
+                        </action>
+                    </file_copy_action>
+                </os>
+            </dart>
+        </file>
+		<file id="csc-install" directoryName="Install Logs">
+			<default>true</default>
+			<description>Install logs</description>
+			<gui>
+				<label>_tr("Install logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%TEMP%\cisco-secure-client*-core-vpn-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%WINDIR%\Temp\cisco-secure-client*-core-vpn-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/cisco-secure-client*-core-vpn-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn-Darwin_*-Release-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-sbl-install" directoryName="Install Logs">
+			<default>true</default>
+			<description>Start Before Logon PLAP install logs</description>
+			<gui>
+				<label>_tr("Start Before Logon install logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%TEMP%\cisco-secure-client*-gina-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%WINDIR%\Temp\cisco-secure-client*-gina-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-sbl-runtime" directoryName="Logs">
+			<default>true</default>
+			<description>Start Before Logon runtime logs</description>
+			<gui>
+				<label>_tr("Start Before Logon runtime logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\Logs\vpngina_*_log.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-global-preferences" directoryName="Preferences">
+			<default>true</default>
+			<description>Global Preferences</description>
+			<gui>
+				<label>_tr("Global Preferences")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\VPN\preferences_global.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn/.anyconnect_global</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn/.anyconnect_global</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-user-preferences" directoryName="Preferences">
+			<default>true</default>
+			<description>User Preferences</description>
+			<gui>
+				<label>_tr("User Preferences")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%USERPROFILE%\AppData\Local\Cisco\Cisco Secure Client\VPN\preferences.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>$HOME/.vpn/.anyconnect</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>$HOME/.vpn/.anyconnect</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-ac-profile" directoryName="Profiles">
+			<default>true</default>
+			<description>Profiles</description>
+			<gui>
+				<label>_tr("Profiles")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<directory_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\VPN\Profile</loc>
+							<pattern>*.xml</pattern>
+							<pattern>*.xsd</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+				<os opsys="linux">
+					<directory_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn/profile</loc>
+							<pattern>*.xml</pattern>
+							<pattern>*.xsd</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+				<os opsys="mac">
+					<directory_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn/profile</loc>
+							<pattern>*.xml</pattern>
+							<pattern>*.xsd</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-ac-script" directoryName="Scripts">
+			<default>true</default>
+			<description>Scripting</description>
+			<gui>
+				<label>_tr("Scripting")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<directory_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\VPN\Script</loc>
+							<pattern>*</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+				<os opsys="linux">
+					<directory_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn/script</loc>
+							<pattern>*</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+				<os opsys="mac">
+					<directory_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn/script</loc>
+							<pattern>*</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-ac-dmp" directoryName="Crash Reports">
+			<default>true</default>
+			<description>Program Dump Files</description>
+			<gui>
+				<label>_tr("Program Dump Files")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">%WINDIR%\Temp\vpncli.exe_*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%WINDIR%\Temp\vpndownloader.exe_*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%WINDIR%\Temp\vpnagent.exe_*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+                        <action>
+                            <loc gather_newest="true">%WINDIR%\Temp\vpnmgmttun.exe_*.mdmp</loc>
+                            <clear_log apply="true"/>
+                        </action>
+						<action>
+							<loc gather_newest="true">%TEMP%\vpncli.exe_*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%TEMP%\vpndownloader.exe_*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+                        <action>
+                            <loc gather_newest="true">%TEMP%\vpnmgmttun.exe_*.mdmp</loc>
+                            <clear_log apply="true"/>
+                        </action>
+						<action>
+							<loc gather_newest="true">%TEMP%\low\vpndownloader.exe_*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%TEMP%\acwebhelper.exe_*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">/var/crash/*_vpnagentd.*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/var/crash/*_vpn.*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/var/crash/*_vpndownloader.*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/var/crash/*_vpndownloader-cli.*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/var/crash/*_acwebhelper.*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/var/crash/*_dartui.*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/var/crash/*_dartcli.*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/var/crash/*_darthelper.*</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/vpndownloader*</loc>
+							<clear_log apply="false"/>
+						</action>
+                        <action>
+                            <loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/vpnmgmttun*</loc>
+                            <clear_log apply="false"/>
+                        </action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/vpn_*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/vpn-*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/acextwebhelper*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/acinstallhelper*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/Cisco Secure Client - Web Browser*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/Cisco Secure Client - AnyConnect VPN Service*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/Cisco Secure Client - Notification*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/Cisco Secure Client - DART*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/dartcli*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/vpndownloader*</loc>
+							<clear_log apply="false"/>
+						</action>
+                        <action>
+                            <loc gather_newest="true">/Library/Logs/DiagnosticReports/vpnmgmttun*</loc>
+                            <clear_log apply="false"/>
+                        </action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/vpn_*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/vpn-*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/acextwebhelper*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/acinstallhelper*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/Cisco Secure Client - Web Browser*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/Cisco Secure Client - AnyConnect VPN Service*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/Cisco Secure Client - Notification*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/Cisco Secure Client - DART*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/dartcli*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/vpnagentd*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/com.cisco.secureclient.dart.helper*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/Cisco Secure Client - Socket Filter*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/com.cisco.anyconnect.macos.acsockext*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/com.cisco.secureclient*</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-ac-logs" directoryName="Logs">
+			<default>true</default>
+			<description>Application logs</description>
+			<gui>
+				<label>_tr("Application logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<use_extern_action>
+						<action>
+							<plugin/>
+							<args>wineventlog.exe -l "Cisco Secure Client - AnyConnect VPN" -f %TEMP%\AnyConnectVPN.txt</args>
+							<clear_log apply="false"/>
+							<temp_out>%TEMP%\AnyConnectVPN.txt</temp_out>
+						</action>
+						<action>
+							<path>%WINDIR%\System32</path>
+							<args>wevtutil epl "Cisco Secure Client - AnyConnect VPN" %TEMP%\AnyConnectVPN.evtx</args>
+							<clear_log apply="true">wevtutil cl "Cisco Secure Client - AnyConnect VPN"</clear_log>
+							<temp_out>%TEMP%\AnyConnectVPN.evtx</temp_out>
+						</action>
+					</use_extern_action>
+					<file_copy_action>
+						<action>
+							<loc>%WINDIR%\Temp\debug_routechangesv4.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%WINDIR%\Temp\debug_routechangesv6.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn/debug_routechangesv4.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn/debug_routechangesv6.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+					<use_extern_action>
+						<action>
+							<args>journalctl -S -1d -t csc_vpnagent -t csc_ui -t csc_vpndownloader -t csc_vpndownloader_major -t csc_vpndownloader_minor -t csc_vpndownloader_plugin -t csc_vpnapi -t csc_vpnapishim -t csc_vpncapi -t csc_vpncli -t csc_vpninstall -t csc_vpnmgmttun -t csc_enablefips -t csc_webhelper -t csc_webhelperplugin</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>AnyConnectVPN.log</temp_out>
+						</action>
+					</use_extern_action>
+					<use_extern_action>
+						<action>
+							<args>journalctl -o export -S -1d -t csc_vpnagent -t csc_ui -t csc_vpndownloader -t csc_vpndownloader_major -t csc_vpndownloader_minor -t csc_vpndownloader_plugin -t csc_vpnapi -t csc_vpnapishim -t csc_vpncapi -t csc_vpncli -t csc_vpninstall -t csc_vpnmgmttun -t csc_enablefips -t csc_webhelper -t csc_webhelperplugin</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>AnyConnectVPN.logexport</temp_out>
+						</action>
+					</use_extern_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn/debug_routechangesv4.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn/debug_routechangesv6.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+					<use_extern_action>
+						<action>
+							<path>/usr/bin</path>
+							<args>log show --predicate 'subsystem contains "com.cisco.secureclient.vpn" AND NOT category IN { "csc_dartcli", "csc_dartui", "csc_darthelper" }' --debug --info --last 2d</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>AnyConnectVPN.log</temp_out>
+						</action>
+					</use_extern_action>
+					<use_extern_action>
+						<action>
+							<path>/usr/bin</path>
+							<args>log show --predicate 'subsystem contains "com.cisco.anyconnect.acsock"' --debug --info --last 1d</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>acsock.log</temp_out>
+						</action>
+					</use_extern_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-ac-dbg-log-config" directoryName="Logs">
+			<default>true</default>
+			<description>Debug Log Configuration</description>
+			<gui>
+				<label>_tr("Debug Log Configuration")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\debuglogconfig.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/debuglogconfig.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/debuglogconfig.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-ac-mtu-adj-cache" directoryName="Data">
+			<default>true</default>
+			<description>MTU Adjustment Cache</description>
+			<gui>
+				<label>_tr("MTU Adjustment Cache")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\vpn\mtuadjustmentcache.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn/mtuadjustmentcache.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/vpn/mtuadjustmentcache.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+	</fileGroup>
+
+	<fileGroup treeRootName="Legacy - Cisco AnyConnect Secure Mobility Client" directoryName="Legacy - Cisco AnyConnect Secure Mobility Client\Cisco AnyConnect Secure Mobility Client">
+		<title>Cisco AnyConnect Secure Mobility Client</title>
+        <file id="ac-install">
+			<default>false</default>
+			<description>AnyConnect install logs</description>
+			<gui>
+				<label>_tr("AnyConnect install logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%TEMP%\anyconnect*-core-vpn-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%WINDIR%\Temp\anyconnect*-core-vpn-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<!-- The install logs for older versions of VPN do not have "core-vpn" in them. -->
+						<!-- Example: anyconnect-win-4.3.00748-pre-deploy-k9-install-101212202019.log   -->
+						<!-- So, use a regex that strictly matches only such file names.                -->
+						<action>
+							<loc>%TEMP%\anyconnect-win-?.?.?????-*-deploy-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%WINDIR%\Temp\anyconnect-win-?.?.?????-*-deploy-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%TEMP%\anyconnect-VC_redist.x86*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%WINDIR%\Temp\anyconnect-VC_redist.x86*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\update.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\VPNManifest.dat</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\AnyConnectLocalPolicy.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\Logs\UpdateHistory_*.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/vpn-Darwin_*-Release-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/anyconnect/update.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/anyconnect/VPNManifest.dat</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/anyconnect/AnyConnectLocalPolicy.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/anyconnect*-core-vpn-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<!-- The install logs for older versions of VPN do not have "core-vpn" in them. -->
+						<!-- Example: anyconnect-linux-64-4.3.05017-k9-11074720122019.log               -->
+						<!-- So, use a regex that strictly matches only such file names.                -->
+						<action>
+							<loc>/opt/cisco/anyconnect/anyconnect-linux*-?.?.?????-k9*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/anyconnect/update.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/anyconnect/VPNManifest.dat</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/anyconnect/AnyConnectLocalPolicy.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="sbl-install">
+			<default>false</default>
+			<description>Start Before Logon PLAP install logs</description>
+			<gui>
+				<label>_tr("Start Before Logon install logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%TEMP%\anyconnect*-gina-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%WINDIR%\Temp\anyconnect*-gina-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="sbl-runtime">
+			<default>false</default>
+			<description>Start Before Logon runtime logs</description>
+			<gui>
+				<label>_tr("Start Before Logon runtime logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\Logs\vpngina_*_log.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="global-preferences">
+			<default>false</default>
+			<description>AnyConnect Global Preferences</description>
+			<gui>
+				<label>_tr("AnyConnect Global Preferences")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\preferences_global.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/.anyconnect_global</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/.anyconnect_global</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="user-preferences">
+			<default>false</default>
+			<description>AnyConnect User Preferences</description>
+			<gui>
+				<label>_tr("AnyConnect User Preferences")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%USERPROFILE%\AppData\Local\Cisco\Cisco AnyConnect Secure Mobility Client\preferences.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>$HOME/.anyconnect</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>$HOME/.anyconnect</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="ac-profile">
+			<default>false</default>
+			<description>AnyConnect Profile</description>
+			<gui>
+				<label>_tr("AnyConnect Profile")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<directory_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\Profile</loc>
+							<pattern>*.xml</pattern>
+							<pattern>*.xsd</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+				<os opsys="linux">
+					<directory_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/profile</loc>
+							<pattern>*.xml</pattern>
+							<pattern>*.xsd</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+				<os opsys="mac">
+					<directory_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/profile</loc>
+							<pattern>*.xml</pattern>
+							<pattern>*.xsd</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="ac-script">
+			<default>false</default>
+			<description>AnyConnect Scripting</description>
+			<gui>
+				<label>_tr("AnyConnect Scripting")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<directory_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\Script</loc>
+							<pattern>*</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+				<os opsys="linux">
+					<directory_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/script</loc>
+							<pattern>*</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+				<os opsys="mac">
+					<directory_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/script</loc>
+							<pattern>*</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="ac-config">
+			<default>false</default>
+			<description>AnyConnect Configurations</description>
+			<gui>
+				<label>_tr("AnyConnect Configurations")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/ac_pf*.conf</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+                <os opsys="win">
+					<file_copy_action>
+                        <action>
+                            <loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\*ProxySettings.keep</loc>
+                            <clear_log apply="false"></clear_log>
+                        </action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="ac-dmp">
+			<default>false</default>
+			<description>AnyConnect program Dump Files</description>
+			<gui>
+				<label>_tr("AnyConnect Program Dump Files")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/Cisco AnyConnect Secure Mobility Client*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/vpndownloader*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/vpnagentd*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/vpn_*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/vpn-*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/Cisco AnyConnect Secure Mobility Client*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/vpndownloader*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/vpnagentd*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/vpn_*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/vpn-*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/Cisco AnyConnect Socket Filter*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/com.cisco.anyconnect*</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="ac-logs">
+			<default>false</default>
+			<description>AnyConnect application logs</description>
+			<gui>
+				<label>_tr("AnyConnect application logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<use_extern_action>
+						<action>
+							<plugin/>
+							<args>wineventlog.exe -l "Cisco AnyConnect Secure Mobility Client" -f %TEMP%\AnyConnect.txt</args>
+							<clear_log apply="false"/>
+							<temp_out>%TEMP%\AnyConnect.txt</temp_out>
+						</action>
+						<action>
+							<path>%WINDIR%\System32</path>
+							<args>wevtutil epl "Cisco AnyConnect Secure Mobility Client" %TEMP%\AnyConnect.evtx</args>
+							<clear_log apply="true">wevtutil cl "Cisco AnyConnect Secure Mobility Client"</clear_log>
+							<temp_out>%TEMP%\AnyConnect.evtx</temp_out>
+						</action>
+					</use_extern_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/debug_routechangesv4.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/anyconnect/debug_routechangesv6.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+					<use_extern_action>
+						<action>
+							<args>journalctl -S -1d -t acvpnagent -t acvpnui -t acvpndownloader -t acvpndownloader_major -t acvpndownloader_minor -t acvpnapi -t acvpncli -t acvpninstall -t acvpnmgmttun -t acenablefips -t acwebhelper -t acwebhelperplugin</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>AnyConnect.log</temp_out>
+						</action>
+					</use_extern_action>
+					<use_extern_action>
+						<action>
+							<args>journalctl -o export -S -1d -t acvpnagent -t acvpnui -t acvpndownloader -t acvpndownloader_major -t acvpndownloader_minor -t acvpnapi -t acvpncli -t acvpninstall -t acvpnmgmttun -t acenablefips -t acwebhelper -t acwebhelperplugin</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>AnyConnect.logexport</temp_out>
+						</action>
+					</use_extern_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/debug_routechangesv4.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/anyconnect/debug_routechangesv6.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+					<use_extern_action>
+						<action>
+							<path>/usr/bin</path>
+							<args>log show --predicate 'subsystem contains "com.cisco.anyconnect.vpn" AND NOT category IN { "acdartcli", "acdartui", "acdarthelper" }' --debug --info --last 2d</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>AnyConnect.log</temp_out>
+						</action>
+					</use_extern_action>
+				</os>
+			</dart>
+		</file>
+		<file id="ac-ui-logs">
+			<default>false</default>
+			<description>AnyConnect UI XML Log Files</description>
+			<gui>
+				<label>_tr("AnyConnect UI XML Log Files")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>$HOME/Library/Preferences/com.cisco.anyconnect.gui.plist</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+					<get_file_to_copy_action>
+						<action>
+							<path>$HOME/Library/Preferences/com.cisco.anyconnect.gui.plist</path>
+						</action>
+					</get_file_to_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="ac-dbg-log-config">
+			<default>false</default>
+			<description>AnyConnect Debug Log Configuration</description>
+			<gui>
+				<label>_tr("AnyConnect Debug Log Configuration")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\debuglogconfig.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/debuglogconfig.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/debuglogconfig.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="ac-mtu-adj-cache">
+			<default>false</default>
+			<description>AnyConnect MTU Adjustment Cache</description>
+			<gui>
+				<label>_tr("AnyConnect MTU Adjustment Cache")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\mtuadjustmentcache.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/mtuadjustmentcache.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/mtuadjustmentcache.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+	</fileGroup>
+</configure>
+

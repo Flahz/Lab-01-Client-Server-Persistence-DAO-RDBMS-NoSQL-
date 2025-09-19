@@ -1,0 +1,407 @@
+<configure xmlns="http://schemas.xmlsoap.org/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://schemas.xmlsoap.org/encoding/ ConfigXMLSchema.xsd">
+    <fileGroup treeRootName="Cisco Secure Client" directoryName="Cisco Secure Client\User Interface">
+        <title>User Interface</title>
+        <file id="csc-ui-logs">
+            <default>true</default>
+            <description>User Interface logs</description>
+            <gui>
+                <label>_tr("User Interface logs")</label>
+                <file_type>log</file_type>
+            </gui>
+            <dart>
+                <required>false</required>
+                <os opsys="win">
+                    <file_copy_action>
+						<action>
+							<!-- User Interface XML log files -->
+                            <loc>%USERPROFILE%\.cisco\vpn\log\UIHistory_*.txt</loc>
+                            <clear_log apply="true"/>
+                        </action>
+                    </file_copy_action>
+					<use_extern_action>
+                        <action>
+                            <!-- User Interface Windows Event txt log file -->
+                            <plugin/>
+                            <args>wineventlog.exe -l "Cisco Secure Client" -f %TEMP%\csc_ui.txt</args>
+                            <clear_log apply="false"/>
+                            <temp_out>%TEMP%\csc_ui.txt</temp_out>
+                        </action>
+						<action>
+							<!-- User Interface Windows Event evtx log file -->
+							<path>%WINDIR%\System32</path>
+							<args>wevtutil epl "Cisco Secure Client" %TEMP%\csc_ui.evtx "/q:*[System [Provider[@Name='csc_ui']]]"</args>
+							<clear_log apply="false"/>
+							<temp_out>%TEMP%\csc_ui.evtx</temp_out>
+						</action>
+					</use_extern_action>
+                </os>
+                <os opsys="mac">
+                    <file_copy_action>
+                        <action>
+							<!-- User Interface XML log files -->
+                            <loc>$HOME/.cisco/vpn/log/UIHistory*.txt</loc>
+                            <clear_log apply="true"/>
+                        </action>
+                    </file_copy_action>
+					<use_extern_action>
+						<action>
+							<path>/usr/bin</path>
+							<args>log show --predicate 'subsystem contains "com.cisco.secureclient.vpn" AND category IN { "csc_ui" }' --debug --info --last 2d</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>csc_ui.log</temp_out>
+						</action>
+					</use_extern_action>
+				</os>
+                <os opsys="linux">
+					<use_extern_action>
+						<action>
+							<args>pkg-config --list-all | grep -E '^gtk\+'</args>
+							<clear_log apply="false"></clear_log>
+							<stdout/>
+							<temp_out>gtk-version_result.log</temp_out>
+						</action>
+					</use_extern_action>
+				</os>
+			</dart>
+		</file>
+        <file id="csc-ui-config-info">
+            <default>true</default>
+            <description>User Interface configurations</description>
+            <gui>
+                <label>_tr("User Interface configurations")</label>
+                <file_type>log</file_type>
+            </gui>
+            <dart>
+                <required>false</required>
+                <os opsys="win">
+					<use_extern_action>
+						<action>
+							<!-- User Interface Version output from Hardlink file -->
+							<path>%WINDIR%\system32</path>
+							<args>fsutil hardlink list "%PROGRAMFILES(X86)%\Cisco\Cisco Secure Client\UI\csc_ui.exe"</args>
+							<clear_log apply="false"></clear_log>
+							<stdout/>
+							<temp_out>csc_ui_fsutil.txt</temp_out>
+						</action>
+						<action>
+							<!-- Client directory file listings -->
+							<path>%WINDIR%\system32</path>
+							<args>tree.com "%PROGRAMFILES(X86)%\Cisco\Cisco Secure Client\" /f /a</args>
+							<clear_log apply="false"></clear_log>
+							<stdout/>
+							<temp_out>csc_files.txt</temp_out>
+						</action>
+					</use_extern_action>	
+					<use_extern_action>
+						<action>
+							<!-- Clients HKEY_CURRENT_USER Registry Hive Information -->
+                            <path>%WINDIR%\system32</path>
+							HKCU\SOFTWARE\Cisco\Cisco Secure Client
+                            <args>reg.exe export "HKCU\SOFTWARE\Cisco\Cisco Secure Client" %TEMP%\csc_reg_hkcu_parameters.txt /y</args>
+                            <clear_log apply="false"></clear_log>
+                            <temp_out>%TEMP%\csc_reg_hkcu_parameters.txt</temp_out>
+                        </action>
+						<action>
+						    <!-- Clients HKEY_LOCAL_MACHINE Registry Hive Information -->
+                            <path>%WINDIR%\system32</path>
+                            <args>reg.exe export "HKLM\SOFTWARE\Cisco\Cisco Secure Client" %TEMP%\csc_reg_hklm_parameters.txt /y</args>
+                            <clear_log apply="false"></clear_log>
+                            <temp_out>%TEMP%\csc_reg_hklm_parameters.txt</temp_out>
+                        </action>
+                        <action>
+							<!-- Clients UI Sound Information -->
+                            <path>%WINDIR%\system32</path>
+                            <args>reg.exe export "HKCU\AppEvents\Schemes\Apps\csc_ui" %TEMP%\csc_reg_hkcu_sound_parameters.txt /y</args>
+                            <clear_log apply="false"></clear_log>
+                            <temp_out>%TEMP%\csc_reg_hkcu_sound_parameters.txt</temp_out>
+                        </action>
+					</use_extern_action>
+				</os>
+				<os opsys="mac">
+				    <file_copy_action>
+                        <action>
+						<!-- Application Information -->
+                            <loc>/Applications/Cisco/Cisco Secure Client.app/Contents/Info.plist</loc>
+                            <clear_log apply="false"/>
+                        </action>
+                    </file_copy_action>
+                    <file_copy_action>
+                        <action>
+							<!-- GUI Information -->
+                            <loc>$HOME/Library/Preferences/com.cisco.secureclient.gui.plist</loc>
+                            <clear_log apply="false"/>
+                        </action>
+                    </file_copy_action>
+                    <get_file_to_copy_action>
+                        <action>
+							<!-- GUI Information -->
+                            <path>$HOME/Library/Preferences/com.cisco.secureclient.gui.plist</path>
+                        </action>
+                    </get_file_to_copy_action>
+                </os>  
+            </dart>
+        </file>
+		<file id="csc-ui-dmp">
+			<default>true</default>
+			<description>User Interface program dump files</description>
+			<gui>
+				<label>_tr("User Interface program dump files")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">%WINDIR%\Temp\csc_ui.exe_*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%TEMP%\csc_ui.exe_*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">/var/crash/*_vpnui.*</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+                        <action>
+                            <loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/Cisco Secure Client*</loc>
+                            <clear_log apply="false"/>
+                        </action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/Cisco Secure Client*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/com.cisco.secureclient.gui*</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-ac-localization" directoryName="l10n">
+			<default>true</default>
+			<description>Localizations</description>
+			<gui>
+				<label>_tr("Localizations")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<directory_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\l10n</loc>
+							<pattern>*</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+				<os opsys="linux">
+					<directory_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/l10n</loc>
+							<pattern>*</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+				<os opsys="mac">
+					<directory_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/l10n</loc>
+							<pattern>*</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+			</dart>
+		</file>
+  </fileGroup>
+	<fileGroup treeRootName="Legacy - Cisco AnyConnect Secure Mobility Client" directoryName="Legacy - Cisco AnyConnect Secure Mobility Client\Cisco AnyConnect Secure Mobility Client - User Interface">
+		<title>Cisco AnyConnect Secure Mobility Client - User Interface</title>
+        <file id="ac-ui-logs">
+			<default>false</default>
+			<description>AnyConnect - User Interface logs</description>
+			<gui>
+				<label>_tr("AnyConnect - User Interface logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+                    <file_copy_action>
+						<action>
+							<!-- User Interface XML log files -->
+                            <loc>%USERPROFILE%\.cisco\vpn\log\UIHistory_*.txt</loc>
+                            <clear_log apply="true"/>
+                        </action>
+                    </file_copy_action>
+					<use_extern_action>
+						<action>
+							<!-- User Interface Windows Event log file -->
+							<path>%WINDIR%\System32</path>
+							<args>wevtutil epl "Cisco AnyConnect Secure Mobility Client" %TEMP%\ac_ui.evt "/q:*[System [Provider[@Name='acvpnui']]]"</args>
+							<clear_log apply="false"/>
+							<temp_out>%TEMP%\ac_ui.evtx</temp_out>
+						</action>
+					</use_extern_action>
+                </os>
+            </dart>
+        </file>
+        <file id="ac-ui-config-info">
+            <default>false</default>
+            <description>AnyConnect - User Interface configurations</description>
+            <gui>
+                <label>_tr("AnyConnect - User Interface configurations")</label>
+                <file_type>log</file_type>
+            </gui>
+            <dart>
+                <required>false</required>
+                <os opsys="win">
+					<use_extern_action>
+						<action>
+							<!-- Client directory file listings -->
+							<path>%WINDIR%\system32</path>
+							<args>tree.com "%PROGRAMFILES(X86)%\Cisco\Cisco AnyConnect Secure Mobility Client\" /f /a</args>
+							<clear_log apply="false"></clear_log>
+							<stdout/>
+							<temp_out>ac_files.txt</temp_out>
+						</action>
+					</use_extern_action>	
+					<use_extern_action>
+						<action>
+							<!-- Clients HKEY_CURRENT_USER Registry Hive Information -->
+                            <path>%WINDIR%\system32</path>
+							HKCU\SOFTWARE\Cisco\Cisco Secure Client
+                            <args>reg.exe export "HKCU\SOFTWARE\Cisco\Cisco AnyConnect Secure Mobility Client" %TEMP%\ac_reg_hkcu_parameters.txt /y</args>
+                            <clear_log apply="false"></clear_log>
+                            <temp_out>%TEMP%\ac_reg_hkcu_parameters.txt</temp_out>
+                        </action>
+						<action>
+						    <!-- Clients HKEY_LOCAL_MACHINE Registry Hive Information -->
+                            <path>%WINDIR%\system32</path>
+                            <args>reg.exe export "HKLM\SOFTWARE\Cisco\Cisco AnyConnect Secure Mobility Client" %TEMP%\ac_reg_hklm_parameters.txt /y</args>
+                            <clear_log apply="false"></clear_log>
+                            <temp_out>%TEMP%\ac_reg_hklm_parameters.txt</temp_out>
+                        </action>
+                        <action>
+							<!-- Clients UI Sound Information -->
+                            <path>%WINDIR%\system32</path>
+                            <args>reg.exe export "HKCU\AppEvents\Schemes\Apps\vpnui" %TEMP%\ac_reg_hkcu_sound_parameters.txt /y</args>
+                            <clear_log apply="false"></clear_log>
+                            <temp_out>%TEMP%\ac_reg_hkcu_sound_parameters.txt</temp_out>
+                        </action>
+					</use_extern_action>
+				</os>
+				<os opsys="mac">
+				    <file_copy_action>
+                        <action>
+						<!-- Application Information -->
+                            <loc>/Applications/Cisco/Cisco AnyConnect Secure Mobility Client.app/Contents/Info.plist</loc>
+                            <clear_log apply="false"/>
+                        </action>
+                    </file_copy_action>
+                </os>  
+            </dart>
+        </file>
+		<file id="ac-ui-dmp">
+			<default>false</default>
+			<description>AnyConnect - User Interface program dump files</description>
+			<gui>
+				<label>_tr("AnyConnect - User Interface program dump files")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">%WINDIR%\Temp\vpnui.exe_*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%TEMP%\vpnui.exe_*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/CrashReporter/Cisco AnyConnect Secure Mobility Client_*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/System/Library/Logs/CrashReporter/Cisco AnyConnect Secure Mobility Client_*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/System/Library/Logs/DiagnosticReports/Cisco AnyConnect Secure Mobility Client_*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/CrashReporter/Cisco AnyConnect Secure Mobility Client_*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/Cisco AnyConnect Secure Mobility Client_*</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">/var/crash/*_vpnui.*</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="ac-localization" directoryName="l10n">
+			<default>false</default>
+			<description>AnyConnect Localizations</description>
+			<gui>
+				<label>_tr("AnyConnect Localizations")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<directory_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\l10n</loc>
+							<pattern>*</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+				<os opsys="mac">
+					<directory_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/l10n</loc>
+							<pattern>*</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+				<os opsys="linux">
+					<directory_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/l10n</loc>
+							<pattern>*</pattern>
+						</action>
+					</directory_copy_action>
+				</os>
+			</dart>
+		</file>
+	</fileGroup>	
+</configure> 

@@ -1,0 +1,13 @@
+[Unit] 
+Description=Cisco Secure Client - Posture Daemon 
+
+[Service] 
+Type=forking
+Restart=on-failure
+ExecStart=/opt/cisco/secureclient/securefirewallposture/bin/ciscod
+PIDFile=/var/run/ciscod.pid
+KillMode=process
+EnvironmentFile=/etc/environment
+
+[Install] 
+WantedBy=multi-user.target

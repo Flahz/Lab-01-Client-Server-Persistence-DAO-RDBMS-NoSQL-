@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configure xmlns="http://schemas.xmlsoap.org/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.xmlsoap.org/encoding/ ConfigXMLSchema.xsd">
+	<fileGroup treeRootName="Cisco Secure Client" directoryName="Cisco Secure Client\Umbrella">
+		<title>Umbrella</title>
+		<file id="csc-umbrella-install" directoryName="Install Logs">
+			<default>true</default>
+			<description>Umbrella install logs</description>
+			<gui>
+				<label>_tr("Umbrella install logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%TEMP%\cisco-secure-client*-umbrella-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%WINDIR%\Temp\cisco-secure-client*-umbrella-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-umbrella-dmp" directoryName="Crash Reports">
+			<default>true</default>
+			<description>Umbrella dump files</description>
+			<gui>
+				<label>_tr("Umbrella dump files")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">%WINDIR%\Temp\acumbrella*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%TEMP%\acumbrella*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%WINDIR%\Temp\csc_swg*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%TEMP%\csc_swg*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/acumbrellaagent*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/acumbrellaagent*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/csc_swgagent*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/csc_swgagent*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/acumbrellacore*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/acumbrellacore*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/dnscrypt-proxy*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/dnscrypt-proxy*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/dnscryptproxy*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/dnscryptproxy*</loc>
+							<clear_log apply="true"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-umbrella-logs" directoryName="Logs">
+			<default>true</default>
+			<description>Umbrella application logs</description>
+			<gui>
+				<label>_tr("Umbrella application logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<use_extern_action>
+						<action>
+							<plugin/>
+							<args>wineventlog.exe -l "Cisco Secure Client - Umbrella" -f %TEMP%\Umbrella.txt</args>
+							<clear_log apply="false"/>
+							<temp_out>%TEMP%\Umbrella.txt</temp_out>
+						</action>
+						<action>
+							<path>%WINDIR%\system32</path>
+							<args>wevtutil epl "Cisco Secure Client - Umbrella" %TEMP%\Umbrella.evtx</args>
+							<clear_log apply="true">wevtutil cl "Cisco Secure Client - Umbrella"</clear_log>
+							<temp_out>%TEMP%\Umbrella.evtx</temp_out>
+						</action>
+					</use_extern_action>
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\Umbrella\data\dart\cscumbrellaplugin.*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\Umbrella\data\dart\cscumbrellacommon.*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\Umbrella\data\whitelist.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+                <os opsys="mac">
+                    <use_extern_action>
+                        <action>
+                            <path>/usr/bin</path>
+                            <args>log show --predicate 'subsystem contains "com.cisco.secureclient.umbrella" || senderImagePath endswith "csc_umbrellacore" || senderImagePath endswith "dnscrypt-proxy"' --debug --info --last 2d</args>
+                            <clear_log apply="false"/>
+                            <stdout/>
+                            <temp_out>Umbrella.log</temp_out>
+                        </action>
+                        <action>
+                            <path>/usr/bin</path>
+                            <args>log show --predicate 'subsystem contains "com.cisco.secureclient.swg" || senderImagePath endswith "csc_swgagent"' --debug --info --last 2d</args>
+                            <clear_log apply="false"/>
+                            <stdout/>
+                            <temp_out>Umbrella_SWG.log</temp_out>
+                        </action>
+                    </use_extern_action>
+                    <file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/umbrella/data/mergedlocaldomains</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/secureclient/umbrella/data/*.plist</loc>
+							<clear_log apply="false"/>
+						</action>
+                    </file_copy_action>
+                </os>
+			</dart>
+		</file>
+		<file id="csc-umbrella-regionaldata" directoryName="regionaldata">
+			<default>true</default>
+			<description>Umbrella Regional Data</description>
+			<gui>
+				<label>_tr("Umbrella Regional Data")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+                    <directory_copy_action>
+                        <action>
+                            <loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\Umbrella\data\regionaldata</loc>
+                            <pattern>home.txt</pattern>
+                            <pattern>OrgInfo.json</pattern>
+                            <pattern>resolv.conf</pattern>
+                            <pattern>mergedlocaldomains</pattern>
+                            <pattern>sync-latest.plist</pattern>
+                            <pattern>acumbrellacore.log</pattern>
+                            <pattern>erc_state.plist</pattern>
+                            <pattern>Updater.plist</pattern>
+                            <pattern>Config.json</pattern>
+                            <pattern>proxy_allowlist*.txt</pattern>
+                            <pattern>PersistedNicDefaults.json</pattern>
+                            <pattern>sync-latest.json</pattern>
+                            <pattern>whitelist.txt</pattern>
+                        </action>
+                    </directory_copy_action>
+				</os>
+                <os opsys="mac">
+                    <directory_copy_action>
+                        <action>
+                            <loc>/opt/cisco/secureclient/umbrella/data/regionaldata</loc>
+                            <pattern>home.txt</pattern>
+                            <pattern>OrgInfo.json</pattern>
+                            <pattern>resolv.conf</pattern>
+                            <pattern>mergedlocaldomains</pattern>
+                            <pattern>sync-latest.plist</pattern>
+                            <pattern>acumbrellacore.log</pattern>
+                            <pattern>erc_state.plist</pattern>
+                            <pattern>Updater.plist</pattern>
+                            <pattern>Config.json</pattern>
+                            <pattern>proxy_allowlist*.txt</pattern>
+                            <pattern>PersistedNicDefaults.json</pattern>
+                            <pattern>sync-latest.json</pattern>
+                            <pattern>whitelist.txt</pattern>
+                        </action>
+                    </directory_copy_action>
+                </os>
+			</dart>
+		</file>
+		<file id="csc-umbrella-profile" directoryName="Profiles">
+			<default>true</default>
+			<description>Umbrella Profile</description>
+			<gui>
+				<label>_tr("Umbrella Profile")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\Umbrella\OrgInfo.json</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\Umbrella\SWG\SWGConfig.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/umbrella/OrgInfo.json</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/secureclient/umbrella/SWG/SWGConfig.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+	</fileGroup>
+	<fileGroup treeRootName="Legacy - Cisco AnyConnect Secure Mobility Client" directoryName="Legacy - Cisco AnyConnect Secure Mobility Client\Cisco AnyConnect Umbrella Roaming Security Module">
+		<title>Cisco AnyConnect Umbrella Roaming Security Module</title>
+		<file id="umbrella-install">
+			<default>false</default>
+			<description>Roaming Security install logs</description>
+			<gui>
+				<label>_tr("Roaming Security install logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%TEMP%\anyconnect*-umbrella-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%WINDIR%\Temp\anyconnect*-umbrella-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="umbrella-dmp">
+			<default>false</default>
+			<description>Roaming Security dump files</description>
+			<gui>
+				<label>_tr("Roaming Security dump files")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">%WINDIR%\Temp\acumbrella*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%TEMP%\acumbrella*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%WINDIR%\Temp\acswg*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%TEMP%\acswg*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/CrashReporter/acswgagent_*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/acswgagent_*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/CrashReporter/acswgagent_*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/acswgagent_*</loc>
+							<clear_log apply="true"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="umbrella-logs">
+			<default>false</default>
+			<description>Roaming Security application logs</description>
+			<gui>
+				<label>_tr("Roaming Security application logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<use_extern_action>
+						<action>
+							<plugin/>
+							<args>wineventlog.exe -l "Cisco AnyConnect Umbrella Roaming Security Module" -f %TEMP%\Umbrella.txt</args>
+							<clear_log apply="false"/>
+							<temp_out>%TEMP%\Umbrella.txt</temp_out>
+						</action>
+						<action>
+							<path>%WINDIR%\system32</path>
+							<args>wevtutil epl "Cisco AnyConnect Umbrella Roaming Security Module" %TEMP%\Umbrella.evtx</args>
+							<clear_log apply="true">wevtutil cl "Cisco AnyConnect Umbrella Roaming Security Module"</clear_log>
+							<temp_out>%TEMP%\Umbrella.evtx</temp_out>
+						</action>
+					</use_extern_action>
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\Umbrella\data\dart\acumbrellaplugin.*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\Umbrella\data\dart\acumbrellacommon.*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\Umbrella\data\whitelist.txt</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<use_extern_action>
+						<action>
+							<path>/usr/bin</path>
+							<args>log show --predicate 'subsystem contains "com.cisco.anyconnect.umbrella" || senderImagePath endswith "acumbrellacore" || senderImagePath endswith "dnscrypt-proxy"' --debug --info --last 2d</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>AnyConnect_Umbrella.log</temp_out>
+						</action>
+						<action>
+							<path>/usr/bin</path>
+							<args>log show --predicate 'subsystem contains "com.cisco.anyconnect.swg" || senderImagePath endswith "acswgagent"' --debug --info --last 2d</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>AnyConnect_SWG.log</temp_out>
+						</action>
+						<action>
+							<loc>/opt/cisco/anyconnect/umbrella/data/mergedlocaldomains</loc>
+							<clear_log apply="false"/>
+						</action>
+					</use_extern_action>
+				</os>
+			</dart>
+		</file>
+		<file id="umbrella-profile">
+			<default>false</default>
+			<description>Roaming Security Profile</description>
+			<gui>
+				<label>_tr("Roaming Security Profile")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\Umbrella\OrgInfo.json</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\Umbrella\SWG\SWGConfig.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/umbrella/OrgInfo.json</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>/opt/cisco/anyconnect/umbrella/SWG/SWGConfig.json</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+	</fileGroup>
+</configure>
+

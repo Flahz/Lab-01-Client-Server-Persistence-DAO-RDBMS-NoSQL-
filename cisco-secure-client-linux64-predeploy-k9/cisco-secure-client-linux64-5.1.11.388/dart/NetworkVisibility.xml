@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configure xmlns="http://schemas.xmlsoap.org/encoding/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.xmlsoap.org/encoding/ ConfigXMLSchema.xsd">
+	<fileGroup treeRootName="Cisco Secure Client" directoryName="Cisco Secure Client\Network Visibility Module">
+		<title>Network Visibility Module</title>
+		<file id="csc-nvm-install" directoryName="Install Logs">
+			<default>true</default>
+			<description>Install logs</description>
+			<gui>
+				<label>_tr("Install logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\NVM\Logs\*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%TEMP%\cisco-secure-client*-nvm-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%WINDIR%\Temp\cisco-secure-client*-nvm-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/cisco-secure-client*-nvm-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-nvm-dmp" directoryName="Crash Reports">
+			<default>true</default>
+			<description>Program Dump files</description>
+			<gui>
+				<label>_tr("Program Dump files")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">%WINDIR%\Temp\acnvm*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">%TEMP%\acnvm*.mdmp</loc>
+							<clear_log apply="true"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">/var/crash/*_acnvmagent.*</loc>
+							<clear_log apply="true"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc gather_newest="true">$HOME/Library/Logs/DiagnosticReports/acnvmagent*</loc>
+							<clear_log apply="true"/>
+						</action>
+						<action>
+							<loc gather_newest="true">/Library/Logs/DiagnosticReports/acnvmagent*</loc>
+							<clear_log apply="true"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-nvm-logs" directoryName="Logs">
+			<default>true</default>
+			<description>Application logs</description>
+			<gui>
+				<label>_tr("Application logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<use_extern_action>
+						<action>
+							<plugin/>
+							<args>wineventlog.exe -l "Cisco Secure Client - Network Visibility Module" -f %TEMP%\NetworkVisibility.txt</args>
+							<clear_log apply="false"/>
+							<temp_out>%TEMP%\NetworkVisibility.txt</temp_out>
+						</action>
+						<action>
+							<path>%WINDIR%\system32</path>
+							<args>wevtutil epl "Cisco Secure Client - Network Visibility Module" %TEMP%\NVM.evtx</args>
+							<clear_log apply="true">wevtutil cl "Cisco Secure Client - Network Visibility Module"</clear_log>
+							<temp_out>%TEMP%\NVM.evtx</temp_out>
+						</action>
+					</use_extern_action>
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\NVM\ProcessWoW64Info.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+					<file_copy_action>
+						<action>
+							<loc>%ProgramData%\Cisco\Cisco Secure Client\NVM\acnvmagent_cmidapi.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+					<file_copy_action>
+						<action>
+							<loc>%ProgramFiles(x86)%\Cisco\Cisco Secure Client\CM\Data\acnvmagent_cmidapi.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+					<file_copy_action>
+						<action>
+							<loc>%SystemDrive%\Program Files\Cisco\Cisco Secure Client\CM\Data\acnvmagent_cmidapi.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<use_extern_action>
+						<action>
+							<args>journalctl -S -1d -t csc_nvmagent</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>CiscoSecureClient-NVM.log</temp_out>
+						</action>
+					</use_extern_action>
+					<use_extern_action>
+						<action>
+							<args>journalctl -o export -S -1d -t csc_nvmagent</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>CiscoSecureClient-NVM.logexport</temp_out>
+						</action>
+					</use_extern_action>
+					<use_extern_action>
+						<action>
+							<args>/usr/bin/timeout 10 /usr/bin/cat /sys/kernel/debug/tracing/trace_pipe | /usr/bin/grep NVM_BPF_LOGS</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>CiscoSecureClient-NVM-eBPF.log</temp_out>
+						</action>
+					</use_extern_action>
+				</os>
+				<os opsys="mac">
+					<use_extern_action>
+						<action>
+							<path>/usr/bin</path>
+							<args>log show --predicate 'process contains "acnvmagent"' --debug --info --last 2d</args>
+							<clear_log apply="false"/>
+							<stdout/>
+							<temp_out>CiscoSecureClient-NVM.log</temp_out>
+						</action>
+					</use_extern_action>
+				</os>
+			</dart>
+		</file>
+		<file id="csc-nvm-profile" directoryName="Profiles">
+			<default>true</default>
+			<description>Profiles</description>
+			<gui>
+				<label>_tr("Profiles")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\NVM\NVM_ServiceProfile.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco Secure Client\NVM\NVM_BootstrapProfile.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/NVM/NVM_ServiceProfile.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/NVM/NVM_ServiceProfile.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/secureclient/NVM/NVM_BootstrapProfile.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+	</fileGroup>
+	<fileGroup treeRootName="Legacy - Cisco AnyConnect Secure Mobility Client" directoryName="Legacy - Cisco AnyConnect Secure Mobility Client\Cisco AnyConnect Network Visibility Module">
+		<title>Cisco AnyConnect Network Visibility Module</title>
+		<file id="nvm-install">
+			<default>false</default>
+			<description>NVM install logs</description>
+			<gui>
+				<label>_tr("NVM install logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\NVM\Logs\*</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%TEMP%\anyconnect*-nvm-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+						<action>
+							<loc>%WINDIR%\Temp\anyconnect*-nvm-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/anyconnect*-nvm-*.log</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+		<file id="nvm-logs">
+			<default>false</default>
+			<description>Network Visibility application logs</description>
+			<gui>
+				<label>_tr("Network Visibility application logs")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<use_extern_action>
+						<action>
+							<plugin/>
+							<args>wineventlog.exe -l "Cisco AnyConnect Network Visibility Module" -f %TEMP%\NetworkVisibility.txt</args>
+							<clear_log apply="false"/>
+							<temp_out>%TEMP%\NetworkVisibility.txt</temp_out>
+						</action>
+						<action>
+							<path>%WINDIR%\system32</path>
+							<args>wevtutil epl "Cisco AnyConnect Network Visibility Module" %TEMP%\NVM.evtx</args>
+							<clear_log apply="true">wevtutil cl "Cisco AnyConnect Network Visibility Module"</clear_log>
+							<temp_out>%TEMP%\NVM.evtx</temp_out>
+						</action>
+					</use_extern_action>
+				</os>
+			</dart>
+		</file>
+		<file id="nvm-profile">
+			<default>false</default>
+			<description>Network Visibility Profile</description>
+			<gui>
+				<label>_tr("Network Visibility Profile")</label>
+				<file_type>log</file_type>
+			</gui>
+			<dart>
+				<required>false</required>
+				<os opsys="win">
+					<file_copy_action>
+						<action>
+							<loc>%ALLUSERSPROFILE%\Cisco\Cisco AnyConnect Secure Mobility Client\NVM\NVM_ServiceProfile.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="mac">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/NVM/NVM_ServiceProfile.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+				<os opsys="linux">
+					<file_copy_action>
+						<action>
+							<loc>/opt/cisco/anyconnect/NVM/NVM_ServiceProfile.xml</loc>
+							<clear_log apply="false"/>
+						</action>
+					</file_copy_action>
+				</os>
+			</dart>
+		</file>
+	</fileGroup>
+</configure>
+

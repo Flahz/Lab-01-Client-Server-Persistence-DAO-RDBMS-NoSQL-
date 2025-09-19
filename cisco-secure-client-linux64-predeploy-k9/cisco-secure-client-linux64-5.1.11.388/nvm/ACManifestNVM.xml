@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vpn rev="1.0">
+  <file version="5.1.11.388" id="NVM" is_core="no" type="script" action="install" module="nvm">
+    <uri>binaries/cisco-secure-client-linux64-5.1.11.388-nvm-webdeploy-k9.sh</uri>
+    <display-name>Cisco Secure Client Network Visibility</display-name>
+  </file>
+</vpn>
