@@ -37,8 +37,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           script: |
-            cd /chemin/vers/ton/app
+            cd brokerx/Lab-01-Client-Server-Persistence-DAO-RDBMS-NoSQL-/
             git pull
-            # Redémarre ton service si besoin, exemple :
-            # systemctl restart mon-app
+           
 

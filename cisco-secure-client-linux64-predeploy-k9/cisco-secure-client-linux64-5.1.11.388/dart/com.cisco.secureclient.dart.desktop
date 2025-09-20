@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Cisco Secure Client - DART
-Comment=Collects appropriate log files and diagnostics information for Cisco Secure Client
-Exec=/opt/cisco/secureclient/dart/dartui
-Icon=cisco-secure-client-dart
-Terminal=false
-Encoding=UTF-8
-StartupNotify=true

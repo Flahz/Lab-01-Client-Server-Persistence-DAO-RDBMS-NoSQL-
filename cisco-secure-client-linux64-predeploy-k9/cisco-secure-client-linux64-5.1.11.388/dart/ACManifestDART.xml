@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<vpn rev="1.0">
-  <file version="5.1.11.388" id="DART" is_core="no" type="script" action="install" module="dart">
-    <uri>binaries/cisco-secure-client-linux64-5.1.11.388-dart-webdeploy-k9.sh</uri>
-    <display-name>Cisco Secure Client - DART</display-name>
-  </file>
-</vpn>
